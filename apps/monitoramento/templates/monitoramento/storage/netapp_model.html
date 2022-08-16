@@ -12,11 +12,14 @@
         <ul class="breadcrumb {{ align }}">
             <li>
                 <a href="{% url 'monitoramento:storage' %}">ARMAZENAMENTO</a>
-                <span class="divider">/</span>
+                <span class="divider">/</span> 
             </li>
-            <li class="active">
+            <!-- <li class="active">  Obs.: Alterado em 16/08/2022 de NetApp FAS-8040 para CORPORATIVO...
                 {{title}}
-            </li>
+            </li> -->
+            <li class="active">
+                CORPORATIVO DE ALTA DENSIDADE
+            </li> 
         </ul>
     </div>
 {% endblock %}
