@@ -19,12 +19,16 @@
                     <div class="col-4 tile_stats_count first ">
                         <span class="count_top">Utilizado</span>
                         <div class="count text-danger text-right">{{ storage_area_grupo_trabalho.area_total_usado|get_size_human_number }}<span>{{ storage_area_grupo_trabalho.area_total_usado|get_size_human_size }}</span></div>
-                        <span class="count_bottom">{{storage_area_grupo_trabalho.area_total_usado_porcentagem}}% do quotado</span>
+			<! -- Alteracao para remover % do Quotado em 31/10/2022
+			<span class="count_bottom">{{storage_area_grupo_trabalho.area_total_usado_porcentagem}}% do quotado</span> 
+			-->
                     </div>
                     <div class="col-4 tile_stats_count">
                         <span class="count_top">Liberado</span>
                         <div class="count text-right text-success">{{ storage_area_grupo_trabalho.area_total_liberado|get_size_human_number }}<span>{{ storage_area_grupo_trabalho.area_total_liberado|get_size_human_size }}</span></div>
-                        <span class="count_bottom">{{storage_area_grupo_trabalho.area_total_liberado_porcentagem}}% do quotado</span>
+			<!-- Alteracao para remover % do Quotado em 31/10/2022
+	   		<span class="count_bottom">{{storage_area_grupo_trabalho.area_total_liberado_porcentagem}}% do quotado</span> [
+			-->
                     </div>
 
 		   <!--
