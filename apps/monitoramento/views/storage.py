@@ -74,7 +74,7 @@ class NetappModelView(TemplateView):
                     "area_total_liberado_porcentagem": area_total_liberado_porcentagem,
                 }
             )
-        context["title"] = f'{storage.marca} {storage.modelo}'.upper()
+        #context["title"] = f'{storage.marca} {storage.modelo}'.upper()
         context["quotado"] = StorageAreaGrupoTrabalho.objects.aggregate_all_quota_sum().filter(storage_area__storage_id=storage.id)[0]["quota__sum"] * 1024 * 1024 * 1024 * 1024
         area_total = Area.objects.aggregate_all_snap_disco_used_deduplication_sum()
         context["reserva_utilizada"] = area_total["snap__sum"]

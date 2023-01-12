@@ -12,11 +12,14 @@
         <ul class="breadcrumb {{ align }}">
             <li>
                 <a href="{% url 'monitoramento:storage' %}">ARMAZENAMENTO</a>
-                <span class="divider">/</span>
+                <span class="divider">/</span> 
             </li>
-            <li class="active">
+            <!-- <li class="active">  Obs.: Alterado em 16/08/2022 de NetApp FAS-8040 para CORPORATIVO...
                 {{title}}
-            </li>
+            </li> -->
+            <li class="active">
+                CORPORATIVO DE ALTA DENSIDADE
+            </li> 
         </ul>
     </div>
 {% endblock %}
@@ -26,20 +29,27 @@
         <div class="row p-0 m-0">
             <div class="col-2 p-1 ">
                 <div class="card shadow-menu pb-1 grey lighten-3">
-                    <p class="pl-3 pr-3 pt-1 mb-0">Capacidade: <b class="float-right">2832,8 TB</b></p>
-                    <p class="pl-3 pr-3 pt-1 mb-0">Sistema: <b class="float-right">795,6 TB</b></p>
+                    <p class="pl-3 pr-3 pt-1 mb-0">Capacidade Bruta: <b class="float-right">3420,16 TB</b></p>
+                    <p class="pl-3 pr-3 pt-1 mb-0">Sistema: <b class="float-right">901,12 TB</b></p>
                 </div>
             </div>
             <div class="col-2 p-1">
                 <div class="card shadow-menu pb-1 grey lighten-3">
-                    <p class="pl-3 pr-3 pt-1 mb-0">Dispon&iacute;vel: <b class="float-right">1629,8 TB</b></p>
-                    <p class="pl-3 pr-3 pt-1 mb-0">Reserva (snapshot): <b class="float-right">407,4 TB</b></p>
+                    <p class="pl-3 pr-3 pt-1 mb-0">Capacidade L&iacute;quida: <b class="float-right">2015,23 TB</b></p>
+                    <p class="pl-3 pr-3 pt-1 mb-0">Reserva (snapshot): <b class="float-right">503,81 TB</b></p>
                 </div>
             </div>
             <div class="col-2 p-1">
                 <div class="card shadow-menu pb-1 grey lighten-3">
+		
+	 
+		<!--	
+	             OBS: ALTERADO EM 24/10/2022
+
                     <p class="pl-3 pr-3 pt-1 mb-0">Quotado: <b class="float-right">{{quotado|get_size_human_TB }}</b></p>
-                    <p class="pl-3 pr-3 pt-1 mb-0">Reserva utilizada: <b class="float-right">{{reserva_utilizada|get_size_human }}</b></p>
+		-->  
+
+		    <p class="pl-3 pr-3 pt-1 mb-0">Reserva utilizada: <b class="float-right">{{reserva_utilizada|get_size_human }}</b></p>
                 </div>
             </div>
             <div class="col-2 p-1">
@@ -91,11 +101,16 @@
                                 </div>
                                 <p class="pl-2 pr-2 pt-1 mb-0">Utilizado: <b
                                         class="float-right">{{ divisao.area_total_usado|get_size_human }}</b></p>
-                                <p class="pl-2 pr-2 pt-1 mb-0">Liberado: <b
+                                <p class="pl-2 pr-2 pt-1 mb-0">Total: <b
                                         class="float-right">{{ divisao.area_total_liberado|get_size_human }}</b></p>
-                                <p class="pl-2 pr-2 pt-1 mb-0">Quotado: <b
+			<!--
+	   		    OBS: ALTERADO EM 24/10/22
+
+				<p class="pl-2 pr-2 pt-1 mb-0">Quotado: <b
                                         class="float-right">{{ divisao.quota_total|get_size_human }}</b></p>
-                            </div>
+			-->
+
+			     </div>
                         </div>
                     </div>
                 </a>
