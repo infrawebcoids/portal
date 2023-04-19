@@ -53,7 +53,8 @@ class ColaboradorAdmin(admin.ModelAdmin):
                 ("Informações Portal", {"fields": ["username", "uid", "is_superuser", "is_staff", "is_active", "last_login", "date_joined"]}),
             ]
             self.inlines = [GroupInLine, ColaboradorGrupoAcessoInLineRead]
-            self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio", "registro_inpe", "data_fim", "vinculo"]
+#J18abr2023 self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio", "registro_inpe", "data_fim", "vinculo"]
+            self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio", "registro_inpe", "vinculo"]
         else:
             if request.user.has_perm("colaborador.secretaria_colaborador"):
                 self.fieldsets = [
@@ -61,7 +62,8 @@ class ColaboradorAdmin(admin.ModelAdmin):
                     ("Informações Pessoais", {"fields": ["first_name", "last_name", "email"]}),
                     ("Informações Profissionais", {"fields": ["vinculo", "predio", "divisao", "ramal", "responsavel", "registro_inpe", "empresa", "data_inicio", "data_fim", "externo"]}),
                 ]
-            self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio", "registro_inpe", "data_fim", "vinculo"]
+#J18abr2023 self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio", "registro_inpe", "data_fim", "vinculo"]
+                self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio", "registro_inpe", "vinculo"]
             else:
                 self.fieldsets = [
 #J                    ("Informações Pessoais", {"fields": ["first_name", "last_name", "data_nascimento", "email", "telefone",]}),
