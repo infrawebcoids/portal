@@ -85,7 +85,9 @@ class ColaboradorAdmin(admin.ModelAdmin):
             "Servidor":["responsavel", "empresa", "data_fim", "externo"],
             "Bolsista":["empresa", "registro_inpe",],
             "Estagiário":["empresa", "registro_inpe",],
-            "Terceiro":["registro_inpe",]
+            "Terceiro":["registro_inpe",],
+            "Aluno":["empresa", "registro_inpe",],
+            "Visitante":["empresa", "registro_inpe",]
         }
         fields_exclude = fields_exclude_colaborador[colaborador.vinculo.vinculo]
         if colaborador.externo:
