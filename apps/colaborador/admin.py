@@ -54,7 +54,7 @@ class ColaboradorAdmin(admin.ModelAdmin):
             ]
             self.inlines = [GroupInLine, ColaboradorGrupoAcessoInLineRead]
 #J18abr2023 self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio", "registro_inpe", "data_fim", "vinculo"]
-            self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio", "registro_inpe", "vinculo"]
+            self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio"]
         else:
             if request.user.has_perm("colaborador.secretaria_colaborador"):
                 self.fieldsets = [
@@ -63,7 +63,7 @@ class ColaboradorAdmin(admin.ModelAdmin):
                     ("Informações Profissionais", {"fields": ["vinculo", "predio", "divisao", "ramal", "responsavel", "registro_inpe", "empresa", "data_inicio", "data_fim", "externo"]}),
                 ]
 #J18abr2023 self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio", "registro_inpe", "data_fim", "vinculo"]
-                self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio", "registro_inpe", "vinculo"]
+                self.readonly_fields = ["username", "uid", "is_staff", "is_active", "last_login", "date_joined", "data_inicio"]
             else:
                 self.fieldsets = [
 #J                    ("Informações Pessoais", {"fields": ["first_name", "last_name", "data_nascimento", "email", "telefone",]}),
