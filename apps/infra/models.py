@@ -280,7 +280,7 @@ class Servidor(Equipamento):
     @property
     def host_principal(self):
         if self.hostname_ip: 
-            host = self.hostname_ip.through.objects.filter(servidor__id=self.id).order_by('hostnameip__id')[0]
+            host = self.hostname_ip.through.objects.filter(servidor_id=self.id, hostnameipipstartswith='150.163.').order_by('hostnameip_id')[0]
             return host.hostnameip.hostname, host.hostnameip.ip
         return None
 
@@ -301,7 +301,10 @@ class TemplateVM(models.Model):
     @property
     def host_principal(self):
         if self.origens: 
-            host = self.origens.through.objects.filter(template__id=self.id).order_by('hostnameip__id')[0]
+            #host = self.origens.through.objects.filter(template_id=self.id).order_by('hostnameip_id')[0]
+            # Alteracao de correcao da ordenacao de ips realizada em 24/04/24 pela equipe WEB para criacao de VMs #
+
+            host = self.origens.through.objects.filter(template_id=self.id, hostnameipipstartswith='150.163.').order_by('hostnameip_id')[0]
             return host.hostnameip.hostname, host.hostnameip.ip
         return None
 
