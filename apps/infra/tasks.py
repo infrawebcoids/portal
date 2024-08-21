@@ -16,8 +16,11 @@ def get_comandos(origem, destino):
     comandos_final = {'1': [], '2': [], '3': []}
     template_origem, template_origem_ip = origem.host_principal
     vm, vm_ip = destino.host_principal
+    print('Definicao da variavel VM_IP na funcao GET_COMANDOS:', vm_ip)
     template_ips = origem.origens.all()
     vm_ips = destino.hostname_ip.all()
+    print('Definicao da variavel VM_IPS na funcao GET_COMANDOS:', vm_ips)
+
     key_ip = 0
     variaveis = {"{template_origem}": template_origem, 
                 "{template_origem_ip}": template_origem_ip,
@@ -51,6 +54,8 @@ def create_vm_task(self, servidor, vm_id,  template_id, memoria, cpu):
     template = origem.nome
     template_origem, template_origem_ip = origem.host_principal
     vm, vm_ip = destino.host_principal
+    print('IP DA NOVA VM:')
+    print(vm_ip)
     vm_descricao = f"[ {destino.tipo_uso} - {destino.grupo_acesso_name()} ] {destino.descricao}"
     progress_recorder = ProgressRecorder(self)
     user = settings.XEN_AUTH_USER
@@ -60,7 +65,6 @@ def create_vm_task(self, servidor, vm_id,  template_id, memoria, cpu):
     memoria = str(int(memoria) * 1024 * 1024 * 1024)
     cpu = int(cpu)
     total = 200
-    print(template)
     try:
         progress_recorder.set_progress(1, total, description="Conetando no XEN")
         session = Session(f"http://{servidor}.cptec.inpe.br")
@@ -100,34 +104,44 @@ def create_vm_task(self, servidor, vm_id,  template_id, memoria, cpu):
         time.sleep(10)
         progress_recorder.set_progress(100, total, description="Executando Comandos Iniciais")
         comandos = get_comandos(origem, destino)
+        print('Comandos: ')
+        print(comandos)
+
         command = fabric.Connection(template_origem_ip, port=22, user=root, connect_kwargs={'password': root_password})
         contador_progress_temporario = 100
+        print('Comandos Iniciais:')
         for comando in comandos["1"]:
             contador_progress_temporario +=1
             progress_recorder.set_progress(contador_progress_temporario, total, description="Executando Comandos Iniciais")
+            print(comando)
             command.run(comando)
+        print('Comandos de Rede')
         for comando in comandos["2"]:
             contador_progress_temporario +=1
             progress_recorder.set_progress(contador_progress_temporario, total, description="Executando Comandos de Rede")
+            print(comando)
             command.run(comando)
+
+        print('referencia: ', vm_ref)
         progress_recorder.set_progress(contador_progress_temporario, total, description="Reiniciando")
-        session.xenapi.VM.clean_reboot(vm_ref)
-        vgm = session.xenapi.VM.get_guest_metrics(vm_ref)
-        while session.xenapi.VM_guest_metrics.get_os_version(vgm) == {}:
-            progress_recorder.set_progress(contador_progress_temporario, total, description="Reiniciando")
-            contador_progress_temporario +=1
-            time.sleep(1)
-        time.sleep(15)
-        progress_recorder.set_progress(contador_progress_temporario, total, description="Executando Comandos Finais")
+        command.run("shutdown -r now")
+        time.sleep(90)
         command = fabric.Connection(vm_ip, port=22, user=root, connect_kwargs={'password': root_password})
+        print('Comandos Finais:')
         for comando in comandos["3"]:
             contador_progress_temporario +=2
             progress_recorder.set_progress(contador_progress_temporario, total, description="Executando Comandos Finais")
+            print(comando)
             command.run(comando)
         progress_recorder.set_progress(199, total, description="Desabilitando ssh root")
+        
+        # Alterado ordem da reinicialização
+        
         progress_recorder.set_progress(total, total, description=f"{vm} Criada")
     except Exception as e:
         self.update_state(state=states.FAILURE, meta={'custom': str(e)})
+        print('ERRO: ')
+        print(e)
         send_mail('ERRO na Criação de VM', f"{vm} - {str(e)}" , settings.EMAIL_HOST_USER, [settings.EMAIL_SYSADMIN, ])
         return f"Error: {str(e)}"
     finally:
@@ -137,7 +151,6 @@ def create_vm_task(self, servidor, vm_id,  template_id, memoria, cpu):
     destino.save()
     send_mail('Criação de VM OK',f'{vm} criada com sucesso!' , settings.EMAIL_HOST_USER, [settings.EMAIL_SUPORTE, settings.EMAIL_SYSADMIN, ])
     return f"{vm} OK"
-
 
 @shared_task(bind=True)
 def delete_vm_task(self, servidor, vm_name):
@@ -163,6 +176,6 @@ def delete_vm_task(self, servidor, vm_name):
         send_mail('ERRO na Remoção de VM', str(e) , settings.EMAIL_HOST_USER, [settings.EMAIL_SUPORTE, settings.EMAIL_SYSADMIN, ])
         return f"Error: {str(e)}"
         
-
     finally:
         session.xenapi.session.logout()
+ 
