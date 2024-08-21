@@ -59,7 +59,7 @@ class SupercomputadorHistView(TemplateView):
         context = super().get_context_data(**kwargs)
         supercomputador = get_object_or_404(Supercomputador, id=kwargs["pk"])
         try:
-            kafka_client_historico = Kafka(supercomputador.kafka_topico_historico, 580)
+            kafka_client_historico = Kafka(supercomputador.kafka_topico_historico, 2018)
             kafka_client_historico.get_kafka_topic_last()
             nodes_bruto = kafka_client_historico.get_kafka_topic()
             context["grafico"] = self.get_grafico_historico(pd.DataFrame(nodes_bruto))
@@ -84,7 +84,7 @@ class SupercomputadorHistView(TemplateView):
         df_nodes_bruto = df_nodes_bruto.loc[:, ["atualizacao", "service", "running", "free", "down", "jobs"]]
         # Cria Eixo X dos Ultimos 6 Horas
         last_time = df_nodes_bruto["atualizacao"].iloc[-1]
-        dti = pd.DataFrame({"atualizacao": pd.date_range(start=(last_time - timedelta(hours=24)).strftime("%Y-%m-%d %H:%M:00"), end=last_time)}).fillna(0)
+        dti = pd.DataFrame({"atualizacao": pd.date_range(start=(last_time - timedelta(hours=53)).strftime("%Y-%m-%d %H:%M:00"), end=last_time)}).fillna(0)
         # Merge dos date + data
         serie = pd.merge_ordered(dti, df_nodes_bruto).fillna(0)
         grafico = Echarts()
