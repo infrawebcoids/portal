@@ -1,6 +1,6 @@
 from django.contrib import admin
 from apps.core.forms import GrupoTrabalhoForm, ResponsavelGrupoTrabalhoInLineForm, DivisaoForm
-from apps.core.models import GrupoTrabalho, GrupoAcesso, Divisao, GrupoPortal, ResponsavelGrupoTrabalho, ColaboradorGrupoAcesso, Predio, ColaboradorEquipamento
+from apps.core.models import GrupoTrabalho, GrupoAcesso, Divisao, GrupoPortal, ResponsavelGrupoTrabalho, ColaboradorGrupoAcesso, Predio
 from apps.core.utils.freeipa import FreeIPA
 from apps.infra.admin import StorageAreaGrupoTrabalhoInLine, GrupoAcessoEquipamentoInLineRead
 from django.contrib.auth.models import Group
