@@ -1,6 +1,6 @@
 from django.contrib import admin
 from apps.core.forms import GrupoTrabalhoForm, ResponsavelGrupoTrabalhoInLineForm, DivisaoForm
-from apps.core.models import GrupoTrabalho, GrupoAcesso, Divisao, GrupoPortal, ResponsavelGrupoTrabalho, ColaboradorGrupoAcesso, Predio
+from apps.core.models import GrupoTrabalho, GrupoAcesso, Divisao, GrupoPortal, ResponsavelGrupoTrabalho, ColaboradorGrupoAcesso, Predio, ColaboradorEquipamento
 from apps.core.utils.freeipa import FreeIPA
 from apps.infra.admin import StorageAreaGrupoTrabalhoInLine, GrupoAcessoEquipamentoInLineRead
 from django.contrib.auth.models import Group
@@ -56,16 +56,23 @@ class GrupoAcessoInLine(admin.TabularInline):
 
 class ColaboradorGrupoAcessoInLineRead(admin.TabularInline):
     model = ColaboradorGrupoAcesso
-    fields = ("grupo_acesso", "status", "atualizacao")
-    readonly_fields = ("grupo_acesso", "status", "atualizacao")
+    fields = ("grupo_acesso", "status", "atualizacao", "equipamentos")
+    readonly_fields = ("grupo_acesso", "status", "atualizacao", "equipamentos")
     extra = 0
     can_delete = False
+
+    # Exibir os equipamentos dentro do grupo de acesso
+    def equipamentos(self, obj):
+        equipamentos = obj.grupo_acesso.equipamentogrupoacesso_set.all()
+        return ", ".join([e.equipamento.nome() for e in equipamentos])
+    equipamentos.short_description = "Equipamentos"
 
     def has_delete_permission(self, request, obj=None):
         return False
 
     def has_add_permission(self, request, obj=None):
         return False
+
 
 
 class GrupoAcessoColaboradorInLineRead(admin.TabularInline):
@@ -206,3 +213,4 @@ class GrupoPortalAdmin(admin.ModelAdmin):
     filter_horizontal = ("permissions",)
 
 admin.site.unregister(Group)
+
