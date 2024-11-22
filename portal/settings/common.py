@@ -162,6 +162,7 @@ GARB_CONFIG = {
                 {"model": "infra.templatevm"},
                 {"model": "infra.rack"},
                 {"model": "infra.hostnameip"},
+                {"model": "infra.rede"},
             ],
         },
         {
