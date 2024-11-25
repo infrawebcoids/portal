@@ -486,9 +486,14 @@ class Ocorrencia(models.Model):
 
 
 class AmbienteVirtual(models.Model):
+    STATUS_CHOICES = [
+        ('ON', 'Ativo'),
+        ('OFF', 'Inativo'),
+    ]
     nome = models.CharField("nome", max_length=255)
     virtualizador = models.CharField("virtualizador", max_length=255)
     versao = models.CharField("versao", max_length=255)
+    status = models.CharField("status", max_length=3, choices=STATUS_CHOICES, default='ON')
     servidor = models.ManyToManyField("infra.Servidor")
 
     def __str__(self):
