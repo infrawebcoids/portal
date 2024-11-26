@@ -498,5 +498,9 @@ class AmbienteVirtual(models.Model):
     status = models.CharField("status", max_length=3, choices=STATUS_CHOICES, default='ON')
     servidor = models.ManyToManyField("infra.Servidor")
 
+    class Meta:
+        verbose_name = "Ambiente Virtual"
+        verbose_name_plural = "Ambientes Virtuais"
+
     def __str__(self):
         return f"{self.nome} ({self.virtualizador} { self.versao})"
