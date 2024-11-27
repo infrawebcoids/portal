@@ -237,7 +237,7 @@ class ServidorAdmin(admin.ModelAdmin):
     change_form_template = "infra/admin/change_form_servidor.html"
     delete_confirmation_template = "infra/admin/delete_confirmation_servidor.html"
     change_list_template  = "infra/admin/change_list_servidor.html"
-    search_fields = ["nome", "patrimonio", "marca", "modelo"]
+    search_fields = ["nome", "patrimonio", "marca", "modelo", "descricao", "servicos"]
     list_filter = ["tipo_uso","tipo" ]
     list_display = ("nome", "tipo", "tipo_uso",  "predio",  "descricao", "grupo", "status")
     fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "marca", "modelo", "serie", "patrimonio", "garantia", "consumo", "rack", "rack_tamanho", "vinculado", "status", "conta", 'vm_remover']
@@ -281,18 +281,18 @@ class ServidorAdmin(admin.ModelAdmin):
     def add_view(self, request, form_url="", extra_context=None):
         extra_context = dict( show_save=False, show_save_and_continue=True)
         self.readonly_fields = ("status","conta")
-        self.fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "marca", "modelo", "serie", "patrimonio", "garantia", "consumo", "rack", "rack_tamanho", "vinculado", "status", "conta"]
+        self.fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "marca", "modelo", "serie", "patrimonio", "garantia", "consumo", "rack", "rack_tamanho", "vinculado", "status", "conta", "servicos"]
         self.inlines = ()
         return super().add_view(request, form_url=form_url, extra_context=extra_context)
 
     def change_view(self, request, object_id, form_url="", extra_context=None):
         servidor = get_object_or_404(Servidor, id=object_id)
         if servidor.tipo == 'Servidor Virtual' and  servidor.vm_ambiente_virtual:
-            self.fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "status", "conta", "vm_remover"]
+            self.fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "status", "conta", "vm_remover", "servicos"]
         elif servidor.tipo == 'Servidor Virtual':
-            self.fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "status", "conta"]
+            self.fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "status", "conta", "servicos"]
         else:
-            self.fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "marca", "modelo", "serie", "patrimonio", "garantia", "consumo", "rack", "rack_tamanho", "vinculado", "status", "conta", ]
+            self.fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "marca", "modelo", "serie", "patrimonio", "garantia", "consumo", "rack", "rack_tamanho", "vinculado", "status", "conta", "servicos"]
 
         self.readonly_fields = ("nome", "status", "conta", "tipo", "tipo_uso", "predio")
         self.inlines = [HostnameIPServidorInLine, GrupoAcessoEquipamentoInLine, OcorrenciaInLine, ServicoNagiosInLine]

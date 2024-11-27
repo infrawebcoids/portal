@@ -16,7 +16,7 @@ class ColaboradorAdmin(admin.ModelAdmin):
     change_form_template = "colaborador/admin/change_form_colaborador.html"
     change_list_template = "colaborador/admin/change_list_colaborador.html"
     list_display = ("username", "full_name", "email", "ramal", "vinculo", "is_active")
-    search_fields = ["username","first_name", "last_name", "email"]
+    search_fields = ["username","first_name", "last_name", "email", "ramal", "is_active"]
     list_filter = ["is_active"]
     inlines = [GroupInLine, ColaboradorGrupoAcessoInLineRead]
     form = ColaboradorBaseForm

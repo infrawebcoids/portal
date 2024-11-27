@@ -259,6 +259,8 @@ class Servidor(Equipamento):
     vm_remover = models.BooleanField("Remover VM", default=False, blank=True, null=True)
     vm_ambiente_virtual = models.ForeignKey("infra.AmbienteVirtual", related_name="vm_ambiente_virtual", blank=True, null=True, on_delete=models.PROTECT)
     nagios_servicos = models.ManyToManyField('monitoramento.NagiosServicos', blank=True,through="ServidorNagiosServico")
+    servicos = models.CharField('serviços', max_length=255, blank=True, null=True)
+    
     objects = ServidorManager()
 
     class Meta:
@@ -495,6 +497,10 @@ class AmbienteVirtual(models.Model):
     versao = models.CharField("versao", max_length=255)
     status = models.CharField("status", max_length=3, choices=STATUS_CHOICES, default='ON')
     servidor = models.ManyToManyField("infra.Servidor")
+
+    class Meta:
+        verbose_name = "Ambiente Virtual"
+        verbose_name_plural = "Ambientes Virtuais"
 
     def __str__(self):
         return f"{self.nome} ({self.virtualizador} { self.versao})"

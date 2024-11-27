@@ -36,7 +36,7 @@ class ServidorForm(forms.ModelForm):
 
     class Meta:
         model = Servidor
-        fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "marca", "modelo", "serie", "patrimonio", "garantia", "consumo", "rack", "rack_tamanho", "vinculado", "status"]
+        fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "marca", "modelo", "serie", "patrimonio", "garantia", "consumo", "rack", "rack_tamanho", "vinculado", "status", "servicos"]
 
     def __init__(self, *args, **kwargs):
         super(ServidorForm, self).__init__(*args, **kwargs)
@@ -48,6 +48,7 @@ class ServidorForm(forms.ModelForm):
             self.fields["consumo"].required = False
             self.fields["serie"].required = False
             self.fields["patrimonio"].required = False
+            self.fields["servicos"].required = False
 
 
 class HostnameIPForm(forms.ModelForm):
