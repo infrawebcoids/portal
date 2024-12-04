@@ -196,7 +196,24 @@ GARB_CONFIG = {
                 {"label": "3SWiki", "route": "wiki:root", "auth": "all"},
             ],
         },
+        {
+            "label": "DASHBOARDS",
+            "icon": "fa-solid fa-chart-bar",
+            "sub_itens": [
+                {"model": "monitoramento.tipomonitoramento"},
+            ],
+        },
+        
     ],
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
 }
 
 LOGIN_URL = '/conta/login/'
