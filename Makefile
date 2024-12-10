@@ -60,7 +60,7 @@ install-prod:
 	@echo -e "\n\n#####################################################"
 	@echo "Adicione configurações em prod.env"
 	@echo "Adicione o arquivo .freeipa_chave.pem para acesso ao FreeIPA"
-	@echo "Adicione a variável no ambiente - django_settings_module=portal.settings.development
+	@echo "Adicione a variável no ambiente - django_settings_module=portal.settings.development"
 	@echo "#####################################################"
 
 
@@ -83,7 +83,7 @@ start-dev:
 # target: start-prod - start for oper 
 start-prod:
 	export django_settings_module=portal.settings.production
-	docker-compose -f ./docker/docker-compose_production.yml -p prod_portal --project-directory $(shell pwd) up -d
+	docker-compose -f ./docker/docker-compose_production.yml -p prod_portal --project-directory $(shell pwd) up
 
 # target: test-dev - start test in dev
 test-dev:

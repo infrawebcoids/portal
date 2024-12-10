@@ -147,8 +147,13 @@ GARB_CONFIG = {
                 {"model": "core.divisao"},
             ],
         },
-        {"label": "Administrador", "icon": "fa-user-cog", "sub_itens": [{"model": "core.grupotrabalho"}, {"model": "core.grupoacesso"}, {"model": "core.grupoportal"}]},
-        
+        {
+            "label": "Administrador", 
+            "icon": "fa-user-cog", 
+            "sub_itens": [
+                {"model": "core.grupotrabalho"}, 
+                {"model": "core.grupoacesso"}, 
+                {"model": "core.grupoportal"}]},
         {
             "label": "Infraestrutura",
             "icon": "fa-building",
