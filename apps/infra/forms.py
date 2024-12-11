@@ -2,6 +2,7 @@ import re
 from django import forms
 from django.db.models import Q
 from django.forms import ModelChoiceField
+from apps.core.models import ServidorTenants, Tenants
 from garb.forms import GarbForm
 
 from apps.infra.models import Equipamento, EquipamentoGrupoAcesso, EquipamentoParte, HostnameIP, Ocorrencia, Rack, Servidor, ServidorHostnameIP, StorageAreaGrupoTrabalho, TemplateComando, TemplateVM
@@ -119,6 +120,12 @@ class EquipamentoGrupoAcessoForm(forms.ModelForm):
         fields = ["grupo_acesso"]
         widgets = {"grupo_acesso": forms.Select(attrs={"data-live-search": "True"})}
 
+
+class ServidorTenantsInLineForm(forms.ModelForm):
+    class Meta:
+        model = Tenants
+        fields = ["tenants"]
+        widgets = {"tenants": forms.Select(attrs={"data-live-search": "True"})}
 
 class OcorrenciaInLineForm(forms.ModelForm):
     

@@ -2,7 +2,7 @@ import datetime
 
 from django.contrib.auth.models import Group
 from django.db import models
-from apps.core.managers import ColaboradorGrupoAcessoManager, DivisaoManager, GrupoAcessoManager, GrupoTrabalhoManager, ResponsavelGrupoTrabalhoManager
+from apps.core.managers import ColaboradorGrupoAcessoManager, DivisaoManager, GrupoAcessoManager, TenantsManager, GrupoTrabalhoManager, ResponsavelGrupoTrabalhoManager
 
 
 class Predio(models.Model):
@@ -145,6 +145,31 @@ class GrupoPortal(Group):
         proxy = True
         verbose_name = "Grupo no Portal"
         verbose_name_plural = "Grupos no Portal"
+
+
+class Tenants(models.Model):
+    tenants = models.CharField(verbose_name='Grupo de Rede', max_length=255)
+
+    objects = TenantsManager()
+
+    class Meta:
+        verbose_name = "Grupo de Rede"
+        verbose_name_plural = "Grupos de Redes"
+
+    def __str__(self):
+        return f"{self.tenants}"
+    
+class ServidorTenants(models.Model):
+    servidor = models.ForeignKey("infra.Servidor", on_delete=models.CASCADE)
+    tenant = models.ForeignKey("core.Tenants", on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('servidor', 'tenant')
+        verbose_name = "Grupo de Rede"
+        verbose_name_plural = "Grupos de Redes"
+
+    def __str__(self):
+        return f"{self.tenant.tenants}"
 
 
 class ResponsavelGrupoTrabalho(models.Model):

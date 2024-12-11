@@ -60,7 +60,7 @@ install-prod:
 	@echo -e "\n\n#####################################################"
 	@echo "Adicione configurações em prod.env"
 	@echo "Adicione o arquivo .freeipa_chave.pem para acesso ao FreeIPA"
-	@echo "Adicione a variável no ambiente - django_settings_module=portal.settings.development
+	@echo "Adicione a variável no ambiente - django_settings_module=portal.settings.development"
 	@echo "#####################################################"
 
 

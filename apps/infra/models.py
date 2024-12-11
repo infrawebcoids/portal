@@ -260,6 +260,7 @@ class Servidor(Equipamento):
     vm_ambiente_virtual = models.ForeignKey("infra.AmbienteVirtual", related_name="vm_ambiente_virtual", blank=True, null=True, on_delete=models.PROTECT)
     nagios_servicos = models.ManyToManyField('monitoramento.NagiosServicos', blank=True,through="ServidorNagiosServico")
     servicos = models.CharField('serviços', max_length=255, blank=True, null=True)
+    tenants = models.ManyToManyField("core.Tenants", blank=True)
     
     objects = ServidorManager()
 

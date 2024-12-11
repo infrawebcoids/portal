@@ -1,3 +1,4 @@
+from apps.core.models import ServidorTenants, Tenants
 from apps.infra.utils.xen_crud import XenCrud
 from secrets import choice
 
@@ -9,7 +10,7 @@ from apps.infra.forms import (AmbienteVirtualServidorInLineForm,
                               EquipamentoGrupoAcessoForm, EquipamentoParteForm,
                               HostnameIPForm, HostnameIPInLineForm, OcorrenciaChecklistInLineForm,
                               OcorrenciaInLineForm, RackForm, ServidorForm, TemplateComandoInLineForm,
-                              StorageAreaGrupoTrabalhoInLineForm)
+                              StorageAreaGrupoTrabalhoInLineForm, ServidorTenantsInLineForm)
 from apps.infra.models import (AmbienteVirtual, 
                                EquipamentoGrupoAcesso, EquipamentoParte,
                                HostnameIP, Ocorrencia, Rack, Rede, Servidor,
@@ -173,6 +174,17 @@ class ServicoNagiosInLine(admin.TabularInline):
         return formset
 
 
+class TenantsInLine(admin.TabularInline):
+    model = ServidorTenants
+    fields = ("tenant",)
+    extra = 0
+    form = ServidorTenantsInLineForm
+
+    def get_formset(self, request, obj=None, **kwargs):
+        formset = super(TenantsInLine, self).get_formset(request, obj, **kwargs)
+        return formset
+
+
 class OcorrenciaChecklistInLine(admin.TabularInline):
     model = Ocorrencia
     fields = ("equipamento","descricao")
@@ -237,13 +249,13 @@ class ServidorAdmin(admin.ModelAdmin):
     change_form_template = "infra/admin/change_form_servidor.html"
     delete_confirmation_template = "infra/admin/delete_confirmation_servidor.html"
     change_list_template  = "infra/admin/change_list_servidor.html"
-    search_fields = ["nome", "patrimonio", "marca", "modelo", "descricao", "servicos", "grupos"]
+    search_fields = ["nome", "patrimonio", "marca", "modelo", "descricao", "servicos", "grupos", "tenants"]
     list_filter = ["tipo_uso","tipo" ]
     list_display = ("nome", "tipo", "tipo_uso",  "predio",  "descricao", "grupo", "status")
     fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "marca", "modelo", "serie", "patrimonio", "garantia", "consumo", "rack", "rack_tamanho", "vinculado", "status", "conta", 'vm_remover']
     readonly_fields = ("status","conta")
-    form = ServidorForm
-    inlines = [HostnameIPServidorInLine]
+    form = ServidorForm 
+    inlines = [HostnameIPServidorInLine,]
 
     def grupo(self, obj):
         return obj.grupo_acesso_name()
@@ -295,7 +307,7 @@ class ServidorAdmin(admin.ModelAdmin):
             self.fields = ["nome", "tipo", "tipo_uso", "predio", "descricao", "marca", "modelo", "serie", "patrimonio", "garantia", "consumo", "rack", "rack_tamanho", "vinculado", "status", "conta", "servicos"]
 
         self.readonly_fields = ("nome", "status", "conta", "tipo", "tipo_uso", "predio")
-        self.inlines = [HostnameIPServidorInLine, GrupoAcessoEquipamentoInLine, OcorrenciaInLine, ServicoNagiosInLine]
+        self.inlines = [HostnameIPServidorInLine, GrupoAcessoEquipamentoInLine, OcorrenciaInLine, ServicoNagiosInLine, TenantsInLine,]
         return super().change_view(request, object_id, form_url=form_url, extra_context=extra_context)
 
     def save_formset(self, request, form, formset, change):

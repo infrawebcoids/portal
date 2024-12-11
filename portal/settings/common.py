@@ -122,6 +122,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 MEDIA_URL = "/media/"
 
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 GARB_CONFIG = {
     "PROJECT_NAME": "3SPortal",
@@ -147,7 +155,16 @@ GARB_CONFIG = {
                 {"model": "core.divisao"},
             ],
         },
-        {"label": "Administrador", "icon": "fa-user-cog", "sub_itens": [{"model": "core.grupotrabalho"}, {"model": "core.grupoacesso"}, {"model": "core.grupoportal"}]},
+        {
+            "label": "Administrador", 
+            "icon": "fa-user-cog", 
+            "sub_itens": [
+                {"model": "core.grupotrabalho"},
+                {"model": "core.grupoacesso"}, 
+                {"model": "core.grupoportal"},
+                {"model": "core.tenants"}
+            ]
+        },
         
         {
             "label": "Infraestrutura",

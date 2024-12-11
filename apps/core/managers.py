@@ -23,3 +23,7 @@ class DivisaoManager(models.Manager):
 class ColaboradorGrupoAcessoManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().select_related("colaborador")
+    
+class TenantsManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset()
